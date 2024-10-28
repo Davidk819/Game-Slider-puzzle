@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useGameContext } from "../../context/GameContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import WinMessage from "../WinMessage/WinMessage";
 
 interface TileProps {
   $empty: boolean;
@@ -32,7 +33,10 @@ const Tile = styled.div<TileProps>`
 `;
 
 const Board = () => {
-  const { arr, setArr } = useGameContext();
+  const { arr, setArr,shuffle, setIsWin } = useGameContext();
+  const [showWinMessage, setShowWinMessage] = useState(false); 
+  const [gameStarted, setGameStarted] = useState(false); 
+
 
   const findEmptyTileIndex = () => arr.indexOf(null);
 
@@ -55,6 +59,7 @@ const Board = () => {
       const newArr = [...arr];
       [newArr[index], newArr[emptyIndex]] = [newArr[emptyIndex], newArr[index]];
       setArr(newArr);
+      setGameStarted(true);
     }
   };
   const handleWin = () => {
@@ -67,11 +72,22 @@ const Board = () => {
     return array.every((value, index) => value === winningArr[index]);
   };
 
+  const restartGame = () => {
+    shuffle()
+    setShowWinMessage(false);
+    setIsWin(false)
+    setGameStarted(false); 
+
+  };
   useEffect(() => {
-    if (findEmptyTileIndex() === 8 && checkWin(arr)) {
+    if (gameStarted && findEmptyTileIndex() === 8 && checkWin(arr)) {
       console.log("Congratulations! You've won the game!");
+      setShowWinMessage(true);
+        setIsWin(true)
+    } else {
+      setShowWinMessage(false);
     }
-  }, [arr]);
+  }, [arr, gameStarted]);
 
   return (
     <div>
@@ -87,6 +103,7 @@ const Board = () => {
       ))}
     </BoardContainer>
       <button onClick={handleWin}>Winnnn</button>
+      {showWinMessage && <WinMessage onRestart={restartGame}></WinMessage>}
     </div>
   );
 };

@@ -4,12 +4,17 @@ interface GameContextType {
     arr: (number | null)[];
     shuffle: () => void;
     setArr: (newArr: (number | null)[]) => void;
+    isWin: boolean;
+    setIsWin: (status: boolean) => void
 }
 
 const GameContext = createContext<GameContextType>({
     arr: [],
     shuffle: () => {},
-    setArr: () => {}
+    setArr: () => {},
+    isWin: false,
+    setIsWin: () => {}
+    
 });
 
 export const useGameContext = () => useContext(GameContext);
@@ -20,6 +25,7 @@ interface GameProviderProps {
 
 export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
     const [arr, setArr] = useState<(number | null)[]>([1, 2, 3, 4, 5, 6, 7, 8, null]);
+    const [isWin, setIsWin] = useState<boolean>(false)
 
     useEffect(() => {
         shuffle()
@@ -34,7 +40,7 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
     };
 
     return (
-        <GameContext.Provider value={{ arr, shuffle, setArr }}>
+        <GameContext.Provider value={{ arr, shuffle, setArr, isWin, setIsWin }}>
             {children}
         </GameContext.Provider>
     );
