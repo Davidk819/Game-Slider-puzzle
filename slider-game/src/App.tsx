@@ -7,7 +7,7 @@ function App() {
     <>
       <GameProvider>
         <Home />
-      </GameProvider>{" "}
+      </GameProvider>
     </>
   );
 }
