@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import Board from "../Board/Board";
 import { useGameContext } from "../../context/GameContext";
+import Timer from "../Timer/Timer";
+import useTimer from "../Timer/useTimer";
 
 const HomeContainer = styled.div`
   display: flex;
@@ -25,12 +27,15 @@ const ResetButton = styled.button`
 `;
 const Home = () => {
   const { shuffle, isWin } = useGameContext();
+  const { reset } = useTimer();
 
   return (
     <HomeContainer>
       <h1>Welcome to slider game!</h1>
       <Board />
       {!isWin && <ResetButton onClick={shuffle}>Restart Game</ResetButton>}
+      <Timer />
+      <button onClick={reset}>reset</button>
     </HomeContainer>
   );
 };

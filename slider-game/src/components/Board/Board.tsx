@@ -41,7 +41,7 @@ const Board = () => {
   const findEmptyTileIndex = () => arr.indexOf(null);
 
   const isValidMove = (index: number, emptyIndex: number): boolean => {
-    const rowLength = 3; // מספר העמודות
+    const rowLength = 3; 
 
     const isAdjacent =
       Math.abs(index - emptyIndex) === 1 &&
@@ -88,6 +88,7 @@ const Board = () => {
       setShowWinMessage(false);
     }
   }, [arr, gameStarted]);
+
 
   return (
     <div>
