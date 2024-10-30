@@ -1,11 +1,13 @@
-import { useState } from "react";
 import "./App.css";
+import { GameProvider } from "./context/GameContext";
+import Home from "./components/Home/Home";
 
 function App() {
-
   return (
     <>
-      <h1>Welcome to slider game</h1>
+      <GameProvider>
+        <Home />
+      </GameProvider>
     </>
   );
 }
